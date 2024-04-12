@@ -343,34 +343,34 @@ if fft2:
 ################################################################
 
 ## LOW PASS
-@st.cache
+@st.cache_data
 def intit_lowpass(cutoff, fs, order=5):
     nyq = 0.5 * fs
     normal_cutoff = cutoff / nyq
     b, a = butter(order, normal_cutoff, btype='low', analog=False)
     return b, a
 
-@st.cache
+@st.cache_data
 def lowpass_filter(data, cutoff, fs, order=5):
     b, a = intit_lowpass(cutoff, fs, order=order)
     y = filtfilt(b, a, data)
     return y
 
 ## HIGH PASS
-@st.cache
+@st.cache_data
 def init_highpass(cutoff, fs, order=5):
     nyq = 0.5 * fs
     normal_cutoff = cutoff / nyq
     b, a = butter(order, normal_cutoff, btype='high', analog=False)
     return b, a
 
-@st.cache
+@st.cache_data
 def highpass_filter(data, cutoff, fs, order=5):
     b, a = init_highpass(cutoff, fs, order=order)
     y = filtfilt(b, a, data)
     return y
 
-@st.cache
+@st.cache_data
 ## BANDPASS
 def init_bandpass(lowcut, highcut, fs, order=5):
     nyq = 0.5 * fs
@@ -379,7 +379,7 @@ def init_bandpass(lowcut, highcut, fs, order=5):
     b, a = butter(order, [low, high], btype='band')
     return b, a
 
-@st.cache
+@st.cache_data
 def bandpass_filter(data, lowcut, highcut, fs, order=5):
     b, a = init_bandpass(lowcut, highcut, fs, order=order)
     y = filtfilt(b, a, data)
